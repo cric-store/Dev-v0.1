@@ -63,8 +63,7 @@ const Header = () => {
               <img 
                 src="https://customer-assets.emergentagent.com/job_ad12457d-7953-4d9a-aba5-d8b3d9f2110b/artifacts/gwyix5np_43810314-7AC9-492A-A3E1-F1B8A43C7E71.png" 
                 alt="CricStore Logo" 
-                className="h-14 w-auto object-contain"
-                style={{ mixBlendMode: 'multiply' }}
+                className="h-14 w-auto object-contain mix-blend-screen"
               />
             </Link>
 

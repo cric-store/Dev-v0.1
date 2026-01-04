@@ -308,6 +308,7 @@ const ProtectionCollection = () => {
   const [sortBy, setSortBy] = useState('best-selling');
   const [showFilters, setShowFilters] = useState(false);
   const [availabilityFilter, setAvailabilityFilter] = useState('all');
+  const { addToCart } = useCart();
 
   const handleQuickView = (product) => {
     setSelectedProduct(product);

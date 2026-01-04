@@ -20,6 +20,8 @@ import ProtectionCollection from "./components/ProtectionCollection";
 import WicketKeepingCollection from "./components/WicketKeepingCollection";
 import BallsCollection from "./components/BallsCollection";
 import FootwearCollection from "./components/FootwearCollection";
+import BattingGlovesCollection from "./components/BattingGlovesCollection";
+import AccessoriesCollection from "./components/AccessoriesCollection";
 import CartPage from "./pages/CartPage";
 import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
 
@@ -148,6 +150,30 @@ const FootwearPage = () => {
   );
 };
 
+const BattingGlovesPage = () => {
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+      <main>
+        <BattingGlovesCollection />
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+const AccessoriesPage = () => {
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+      <main>
+        <AccessoriesCollection />
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
 const CollectionPage = () => {
   return (
     <div className="min-h-screen bg-white">
@@ -194,6 +220,8 @@ function App() {
             <Route path="/collections/wicket-keeping" element={<WicketKeepingPage />} />
             <Route path="/collections/balls" element={<BallsPage />} />
             <Route path="/collections/footwear" element={<FootwearPage />} />
+            <Route path="/collections/batting-gloves" element={<BattingGlovesPage />} />
+            <Route path="/collections/accessories" element={<AccessoriesPage />} />
             <Route path="/collections/*" element={<CollectionPage />} />
             <Route path="/cart" element={<CartPage />} />
             <Route path="/checkout/success" element={<CheckoutSuccessPage />} />

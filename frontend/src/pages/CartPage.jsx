@@ -264,12 +264,41 @@ const CartPage = () => {
               </div>
             </div>
 
+            {/* Login Option for Guest Users */}
+            {showCheckoutForm && !isAuthenticated && !checkoutAsGuest && (
+              <div className="mb-6 border-t border-gray-200 pt-6">
+                <div className="space-y-3">
+                  <Link
+                    to="/login?redirect=/cart"
+                    className="w-full py-3 px-4 border-2 border-emerald-500 text-emerald-600 font-semibold rounded-xl flex items-center justify-center gap-2 hover:bg-emerald-50 transition-colors"
+                  >
+                    <LogIn size={18} />
+                    Sign in for faster checkout
+                  </Link>
+                  <button
+                    onClick={() => setCheckoutAsGuest(true)}
+                    className="w-full py-2 text-gray-600 hover:text-gray-800 font-medium text-sm"
+                  >
+                    Or continue as guest
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Customer Information Form */}
-            {showCheckoutForm && (
+            {showCheckoutForm && (isAuthenticated || checkoutAsGuest) && (
               <div className="mb-6 space-y-4 border-t border-gray-200 pt-6">
+                {isAuthenticated && (
+                  <div className="bg-emerald-50 border border-emerald-200 rounded-lg p-3 mb-4">
+                    <p className="text-sm text-emerald-700">
+                      Signed in as <span className="font-semibold">{user?.email}</span>
+                    </p>
+                  </div>
+                )}
+                
                 <h3 className="font-semibold text-gray-900 flex items-center gap-2">
                   <User size={18} />
-                  Customer Information
+                  {isAuthenticated ? 'Shipping Information' : 'Customer Information'}
                 </h3>
                 
                 <div>

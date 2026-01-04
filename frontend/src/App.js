@@ -15,6 +15,7 @@ import KitBagsCollection from "./components/KitBagsCollection";
 import BattingGearCollection from "./components/BattingGearCollection";
 import CricketHelmetsCollection from "./components/CricketHelmetsCollection";
 import BattingPadsCollection from "./components/BattingPadsCollection";
+import ProtectionCollection from "./components/ProtectionCollection";
 
 const HomePage = () => {
   return (
@@ -93,6 +94,18 @@ const BattingPadsPage = () => {
   );
 };
 
+const ProtectionPage = () => {
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+      <main>
+        <ProtectionCollection />
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
 const CollectionPage = () => {
   return (
     <div className="min-h-screen bg-white">
@@ -134,6 +147,7 @@ function App() {
           <Route path="/collections/batting-gear" element={<BattingGearPage />} />
           <Route path="/collections/helmets" element={<CricketHelmetsPage />} />
           <Route path="/collections/batting-pads" element={<BattingPadsPage />} />
+          <Route path="/collections/protection" element={<ProtectionPage />} />
           <Route path="/collections/*" element={<CollectionPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="*" element={<HomePage />} />

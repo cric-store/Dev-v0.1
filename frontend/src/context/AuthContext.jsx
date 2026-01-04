@@ -52,9 +52,25 @@ export function AuthProvider({ children }) {
         email,
         password
       });
-      return { data, error };
+      
+      if (error) {
+        // Handle specific Supabase error codes
+        let message = error.message;
+        if (error.message?.includes('Invalid login credentials')) {
+          message = 'Invalid email or password. Please try again.';
+        } else if (error.message?.includes('Email not confirmed')) {
+          message = 'Please verify your email before signing in. Check your inbox.';
+        }
+        return { data: null, error: { message } };
+      }
+      
+      return { data, error: null };
     } catch (err) {
       console.error('SignIn catch error:', err);
+      // Handle the "body stream already read" error
+      if (err.message?.includes('body stream') || err.message?.includes('Body')) {
+        return { data: null, error: { message: 'Invalid email or password. Please try again.' } };
+      }
       return { data: null, error: { message: 'Connection error. Please try again.' } };
     }
   };

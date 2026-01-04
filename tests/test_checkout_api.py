@@ -34,7 +34,7 @@ class TestCheckoutAPI:
                     "quantity": 1
                 }
             ],
-            "origin_url": "https://batting-pads.preview.emergentagent.com"
+            "origin_url": "https://bat-n-ball-3.preview.emergentagent.com"
         }
         
         response = requests.post(
@@ -77,7 +77,7 @@ class TestCheckoutAPI:
                     "quantity": 2
                 }
             ],
-            "origin_url": "https://batting-pads.preview.emergentagent.com"
+            "origin_url": "https://bat-n-ball-3.preview.emergentagent.com"
         }
         
         response = requests.post(
@@ -97,7 +97,7 @@ class TestCheckoutAPI:
         """Test POST /api/checkout with empty cart - should fail"""
         payload = {
             "cart_items": [],
-            "origin_url": "https://batting-pads.preview.emergentagent.com"
+            "origin_url": "https://bat-n-ball-3.preview.emergentagent.com"
         }
         
         response = requests.post(
@@ -119,7 +119,7 @@ class TestCheckoutAPI:
                     # Missing price and quantity
                 }
             ],
-            "origin_url": "https://batting-pads.preview.emergentagent.com"
+            "origin_url": "https://bat-n-ball-3.preview.emergentagent.com"
         }
         
         response = requests.post(
@@ -170,7 +170,7 @@ class TestCheckoutStatusAPI:
                     "quantity": 1
                 }
             ],
-            "origin_url": "https://batting-pads.preview.emergentagent.com"
+            "origin_url": "https://bat-n-ball-3.preview.emergentagent.com"
         }
         
         create_response = requests.post(

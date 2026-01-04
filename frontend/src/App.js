@@ -10,6 +10,7 @@ import PopularBrands from "./components/PopularBrands";
 import PromoBanners from "./components/PromoBanners";
 import Footer from "./components/Footer";
 import CricketBatsCollection from "./components/CricketBatsCollection";
+import KitBagsCollection from "./components/KitBagsCollection";
 
 const HomePage = () => {
   return (

@@ -30,16 +30,21 @@ export function AuthProvider({ children }) {
 
   const signUp = async (email, password, fullName) => {
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: fullName,
-          }
-        }
+      // Use backend API to create user with auto-confirmed email
+      const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      const response = await fetch(`${backendUrl}/api/auth/signup`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, full_name: fullName })
       });
-      return { data, error };
+      
+      const data = await response.json();
+      
+      if (data.success) {
+        return { data: data.user, error: null };
+      } else {
+        return { data: null, error: { message: data.message } };
+      }
     } catch (err) {
       console.error('SignUp catch error:', err);
       return { data: null, error: { message: 'Connection error. Please try again.' } };

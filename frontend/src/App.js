@@ -2,6 +2,7 @@ import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
+import { AuthProvider } from "./context/AuthContext";
 import Header from "./components/Header";
 import HeroCarousel from "./components/HeroCarousel";
 import CategorySection from "./components/CategorySection";
@@ -24,6 +25,9 @@ import BattingGlovesCollection from "./components/BattingGlovesCollection";
 import AccessoriesCollection from "./components/AccessoriesCollection";
 import CartPage from "./pages/CartPage";
 import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
+import AuthPage from "./pages/AuthPage";
+import ProfilePage from "./pages/ProfilePage";
+import SettingsPage from "./pages/SettingsPage";
 
 const HomePage = () => {
   return (

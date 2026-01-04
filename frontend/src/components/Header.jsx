@@ -23,6 +23,7 @@ const Header = () => {
       ]
     },
     { name: "Wicket Keeping", href: "/collections/wicket-keeping" },
+    { name: "Balls", href: "/collections/balls" },
     { name: "Kit Bags", href: "/collections/kit-bags" },
     { name: "Footwear", href: "/collections/footwear" },
     { name: "Accessories", href: "/collections/accessories" },

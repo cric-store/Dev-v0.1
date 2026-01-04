@@ -34,7 +34,7 @@ export const categories = [
   {
     id: 6,
     name: "Cricket Helmets",
-    image: "https://images.unsplash.com/photo-1587280501635-68a0e82cd5ff?w=400&h=400&fit=crop",
+    image: "https://crickstore.com/cdn/shop/files/SHREY_KOROYD_STAINLESS_STEEL_HK842_NAVY_2_HD_nUB_nbR3dd.webp?v=1724999918&width=400",
     link: "/collections/helmets"
   }
 ];

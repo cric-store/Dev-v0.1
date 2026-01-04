@@ -28,6 +28,7 @@ Frontend-only React application (no backend/database implemented yet)
 | Batting Pads Collection | ✅ Done | Jan 4, 2026 | `BattingPadsCollection.jsx`, `battingPadsData.js` |
 | Protection Collection | ✅ Done | Jan 4, 2026 | `ProtectionCollection.jsx`, `protectionData.js` |
 | Wicket Keeping Collection | ✅ Done | Jan 4, 2026 | `WicketKeepingCollection.jsx`, `wicketKeepingData.js` |
+| Balls Collection | ✅ Done | Jan 4, 2026 | `BallsCollection.jsx`, `ballsData.js` |
 
 ### Navigation
 | Feature | Status | Date | Files |
@@ -65,6 +66,7 @@ All product data is stored in `/app/frontend/src/data/`:
 - `battingPadsData.js` - 9 batting pads (1 per brand)
 - `protectionData.js` - 4 protection items (abdominal, thigh, arm, chest guards)
 - `wicketKeepingData.js` - 5 wicket keeping gloves
+- `ballsData.js` - 5 cricket balls (red and white)
 
 ---
 
@@ -79,6 +81,7 @@ All product data is stored in `/app/frontend/src/data/`:
 /collections/batting-pads   → BattingPadsPage
 /collections/protection     → ProtectionPage
 /collections/wicket-keeping → WicketKeepingPage
+/collections/balls           → BallsPage
 /collections/*              → CollectionPage (fallback)
 /product/:id                → ProductPage (placeholder)
 ```

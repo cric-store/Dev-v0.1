@@ -153,6 +153,76 @@ async def get_status_checks():
     return status_checks
 
 
+# ==================== AUTH ENDPOINTS ====================
+
+@api_router.post("/auth/signup", response_model=AuthResponse)
+async def sign_up(request: SignUpRequest):
+    """Sign up a new user with auto-confirmed email"""
+    try:
+        # Use admin API to create user with confirmed email
+        result = supabase.auth.admin.create_user({
+            "email": request.email,
+            "password": request.password,
+            "email_confirm": True,
+            "user_metadata": {"full_name": request.full_name}
+        })
+        
+        if result.user:
+            return AuthResponse(
+                success=True,
+                message="Account created successfully!",
+                user={
+                    "id": result.user.id,
+                    "email": result.user.email,
+                    "full_name": request.full_name
+                }
+            )
+        else:
+            return AuthResponse(success=False, message="Failed to create account")
+            
+    except Exception as e:
+        logger.error(f"Signup error: {str(e)}")
+        error_msg = str(e)
+        if "email_exists" in error_msg or "already been registered" in error_msg:
+            return AuthResponse(success=False, message="An account with this email already exists")
+        return AuthResponse(success=False, message="Failed to create account. Please try again.")
+
+
+@api_router.post("/auth/signin", response_model=AuthResponse)
+async def sign_in(request: SignInRequest):
+    """Sign in an existing user"""
+    try:
+        result = supabase.auth.sign_in_with_password({
+            "email": request.email,
+            "password": request.password
+        })
+        
+        if result.user and result.session:
+            return AuthResponse(
+                success=True,
+                message="Signed in successfully!",
+                user={
+                    "id": result.user.id,
+                    "email": result.user.email,
+                    "full_name": result.user.user_metadata.get("full_name", "")
+                },
+                session={
+                    "access_token": result.session.access_token,
+                    "refresh_token": result.session.refresh_token,
+                    "expires_at": result.session.expires_at
+                }
+            )
+        else:
+            return AuthResponse(success=False, message="Invalid email or password")
+            
+    except Exception as e:
+        logger.error(f"Signin error: {str(e)}")
+        error_msg = str(e)
+        if "Invalid login" in error_msg:
+            return AuthResponse(success=False, message="Invalid email or password")
+        return AuthResponse(success=False, message="Failed to sign in. Please try again.")
+
+
 # ==================== SUPABASE CUSTOMER & ORDER ENDPOINTS ====================
 
 @api_router.post("/checkout", response_model=CheckoutResponse)

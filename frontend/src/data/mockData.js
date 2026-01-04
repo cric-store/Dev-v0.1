@@ -4,7 +4,7 @@ export const categories = [
   {
     id: 1,
     name: "Kit Bags",
-    image: "https://images.unsplash.com/photo-1531415074968-036ba1b575da?w=400&h=400&fit=crop",
+    image: "https://crickstore.com/cdn/shop/files/ProDuffle500-KitBag-2_b997bc18-091e-4a58-82c8-18ed68a44468.webp?v=1724592184&width=400",
     link: "/collections/kit-bags"
   },
   {

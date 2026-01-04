@@ -457,29 +457,32 @@ const CartPage = () => {
               </div>
             )}
 
-            <button
-              onClick={handleCheckout}
-              disabled={isLoading}
-              className="w-full py-4 bg-gradient-to-r from-emerald-400 to-green-500 text-white font-bold rounded-xl flex items-center justify-center gap-2 hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
-              data-testid="checkout-btn"
-            >
-              {isLoading ? (
-                <>
-                  <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
-                  Processing...
-                </>
-              ) : showCheckoutForm ? (
-                <>
-                  <CreditCard size={20} />
-                  Pay {formatPrice(getCartTotal())}
-                </>
-              ) : (
-                <>
-                  <CreditCard size={20} />
-                  Proceed to Checkout
-                </>
-              )}
-            </button>
+            {/* Show Pay button only when form is visible (authenticated or guest checkout selected) */}
+            {(!showCheckoutForm || isAuthenticated || checkoutAsGuest) && (
+              <button
+                onClick={handleCheckout}
+                disabled={isLoading}
+                className="w-full py-4 bg-gradient-to-r from-emerald-400 to-green-500 text-white font-bold rounded-xl flex items-center justify-center gap-2 hover:shadow-lg transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+                data-testid="checkout-btn"
+              >
+                {isLoading ? (
+                  <>
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                    Processing...
+                  </>
+                ) : showCheckoutForm && (isAuthenticated || checkoutAsGuest) ? (
+                  <>
+                    <CreditCard size={20} />
+                    Pay {formatPrice(getCartTotal())}
+                  </>
+                ) : (
+                  <>
+                    <CreditCard size={20} />
+                    Proceed to Checkout
+                  </>
+                )}
+              </button>
+            )}
 
             {/* Trust Badges */}
             <div className="mt-6 pt-6 border-t border-gray-200">

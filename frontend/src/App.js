@@ -76,6 +76,7 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<HomePage />} />
+          <Route path="/collections/cricket-bats" element={<CricketBatsPage />} />
           <Route path="/collections/*" element={<CollectionPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="*" element={<HomePage />} />

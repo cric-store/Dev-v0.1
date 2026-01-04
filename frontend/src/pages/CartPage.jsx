@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useCart } from '../context/CartContext';
-import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft, CreditCard, Truck, Shield, User, Mail, Phone, MapPin } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
+import { Trash2, Plus, Minus, ShoppingBag, ArrowLeft, CreditCard, Truck, Shield, User, Mail, Phone, MapPin, LogIn } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 // Format price in CAD
@@ -15,9 +16,11 @@ const formatPrice = (price) => {
 
 const CartPage = () => {
   const { cartItems, removeFromCart, updateQuantity, getCartTotal, clearCart } = useCart();
+  const { user, isAuthenticated } = useAuth();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [showCheckoutForm, setShowCheckoutForm] = useState(false);
+  const [checkoutAsGuest, setCheckoutAsGuest] = useState(false);
   
   // Customer form state
   const [customerInfo, setCustomerInfo] = useState({

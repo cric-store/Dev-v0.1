@@ -13,6 +13,7 @@ import CricketBatsCollection from "./components/CricketBatsCollection";
 import CricketBatsCollectionNew from "./components/CricketBatsCollectionNew";
 import KitBagsCollection from "./components/KitBagsCollection";
 import BattingGearCollection from "./components/BattingGearCollection";
+import CricketHelmetsCollection from "./components/CricketHelmetsCollection";
 
 const HomePage = () => {
   return (

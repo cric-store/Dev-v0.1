@@ -122,9 +122,71 @@ const Header = () => {
               <button className="p-2 hover:bg-gray-800 rounded-full transition-colors">
                 <Search size={20} className="text-white" />
               </button>
-              <button className="p-2 hover:bg-gray-800 rounded-full transition-colors hidden sm:block">
-                <User size={20} className="text-white" />
-              </button>
+              
+              {/* User Menu */}
+              <div 
+                className="relative hidden sm:block"
+                onMouseEnter={() => setUserMenuOpen(true)}
+                onMouseLeave={() => setUserMenuOpen(false)}
+              >
+                <button className="p-2 hover:bg-gray-800 rounded-full transition-colors">
+                  <User size={20} className="text-white" />
+                </button>
+                
+                {userMenuOpen && (
+                  <div className="absolute top-full right-0 mt-2 w-56 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
+                    <div className="absolute -top-2 right-4 w-4 h-4 bg-white border-l border-t border-gray-100 transform rotate-45" />
+                    
+                    {isAuthenticated ? (
+                      <>
+                        <div className="px-4 py-2 border-b border-gray-100">
+                          <p className="text-sm font-medium text-gray-900 truncate">
+                            {user?.user_metadata?.full_name || 'User'}
+                          </p>
+                          <p className="text-xs text-gray-500 truncate">{user?.email}</p>
+                        </div>
+                        <Link
+                          to="/profile"
+                          className="flex items-center gap-2 px-4 py-2.5 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors text-sm font-medium"
+                        >
+                          <User size={16} />
+                          My Profile
+                        </Link>
+                        <Link
+                          to="/settings"
+                          className="flex items-center gap-2 px-4 py-2.5 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors text-sm font-medium"
+                        >
+                          <Settings size={16} />
+                          Settings
+                        </Link>
+                        <button
+                          onClick={() => signOut()}
+                          className="w-full flex items-center gap-2 px-4 py-2.5 text-red-600 hover:bg-red-50 transition-colors text-sm font-medium"
+                        >
+                          <LogOut size={16} />
+                          Sign Out
+                        </button>
+                      </>
+                    ) : (
+                      <>
+                        <Link
+                          to="/login"
+                          className="block px-4 py-2.5 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors text-sm font-medium"
+                        >
+                          Sign In
+                        </Link>
+                        <Link
+                          to="/signup"
+                          className="block px-4 py-2.5 text-gray-700 hover:bg-emerald-50 hover:text-emerald-600 transition-colors text-sm font-medium"
+                        >
+                          Create Account
+                        </Link>
+                      </>
+                    )}
+                  </div>
+                )}
+              </div>
+
               <Link to="/cart" className="p-2 hover:bg-gray-800 rounded-full transition-colors relative">
                 <ShoppingCart size={20} className="text-white" />
                 {cartCount > 0 && (

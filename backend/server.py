@@ -6,7 +6,7 @@ from supabase import create_client, Client
 import os
 import logging
 from pathlib import Path
-from pydantic import BaseModel, Field, ConfigDict, EmailStr
+from pydantic import BaseModel, Field, ConfigDict
 from typing import List, Optional, Dict
 import uuid
 from datetime import datetime, timezone
@@ -55,26 +55,29 @@ class StatusCheckCreate(BaseModel):
 class CustomerInfo(BaseModel):
     full_name: str
     email: str
-    phone: str
-    address: str
+    phone: Optional[str] = None
+    address_line1: str
+    address_line2: Optional[str] = None
     city: str
     province: str
     postal_code: str
-    country: str = "Canada"
+    country: str = "CA"
 
 # Cart Item Model
 class CartItem(BaseModel):
     product_id: str
     name: str
-    price: float
+    price: float  # Price in dollars
     quantity: int
     image: Optional[str] = None
+    sku: Optional[str] = None
 
 # Checkout Request with Customer Info
 class CheckoutRequest(BaseModel):
     cart_items: List[CartItem]
     customer: CustomerInfo
     origin_url: str
+    delivery_method: str = "shipping"  # 'shipping' or 'pickup'
 
 class CheckoutResponse(BaseModel):
     checkout_url: str
@@ -94,6 +97,16 @@ class PaymentTransaction(BaseModel):
     metadata: Optional[Dict[str, str]] = None
     created_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
     updated_at: datetime = Field(default_factory=lambda: datetime.now(timezone.utc))
+
+
+def dollars_to_cents(dollars: float) -> int:
+    """Convert dollars to cents for database storage"""
+    return int(round(dollars * 100))
+
+
+def cents_to_dollars(cents: int) -> float:
+    """Convert cents to dollars for display"""
+    return cents / 100
 
 
 # Add your routes to the router instead of directly to app
@@ -133,24 +146,33 @@ async def create_checkout(request: Request, checkout_data: CheckoutRequest):
         if not checkout_data.cart_items:
             raise HTTPException(status_code=400, detail="Cart is empty")
         
-        # Calculate total amount
-        total_amount = 0.0
-        item_names = []
+        # Calculate totals in cents
+        subtotal_cents = 0
         order_items = []
+        item_names = []
         
         for item in checkout_data.cart_items:
-            item_total = float(item.price) * int(item.quantity)
-            total_amount += item_total
+            unit_price_cents = dollars_to_cents(item.price)
+            line_total_cents = unit_price_cents * item.quantity
+            subtotal_cents += line_total_cents
             item_names.append(item.name)
+            
             order_items.append({
                 "product_id": item.product_id,
-                "name": item.name,
-                "price": float(item.price),
-                "quantity": int(item.quantity),
-                "image": item.image
+                "product_name": item.name,
+                "sku": item.sku,
+                "quantity": item.quantity,
+                "unit_price_cents": unit_price_cents,
+                "line_total_cents": line_total_cents
             })
         
-        if total_amount <= 0:
+        # For now, shipping and tax are 0 (free shipping)
+        shipping_cents = 0
+        tax_cents = 0
+        discount_cents = 0
+        total_cents = subtotal_cents + shipping_cents + tax_cents - discount_cents
+        
+        if total_cents <= 0:
             raise HTTPException(status_code=400, detail="Invalid cart total")
         
         # Get Stripe API key
@@ -160,28 +182,36 @@ async def create_checkout(request: Request, checkout_data: CheckoutRequest):
         
         # Generate order ID
         order_id = str(uuid.uuid4())
+        customer_id = None
         
-        # Save customer to Supabase (upsert by email)
-        customer_data = {
-            "email": checkout_data.customer.email,
-            "full_name": checkout_data.customer.full_name,
-            "phone": checkout_data.customer.phone,
-            "address": checkout_data.customer.address,
-            "city": checkout_data.customer.city,
-            "province": checkout_data.customer.province,
-            "postal_code": checkout_data.customer.postal_code,
-            "country": checkout_data.customer.country,
-            "updated_at": datetime.now(timezone.utc).isoformat()
-        }
-        
+        # Step 1: Create or update customer in Supabase
         try:
-            # Try to upsert customer
-            customer_result = supabase.table("customers").upsert(
-                customer_data, 
-                on_conflict="email"
-            ).execute()
-            customer_id = customer_result.data[0]["id"] if customer_result.data else None
-            logger.info(f"Customer saved/updated: {checkout_data.customer.email}")
+            # Check if customer exists by email
+            existing_customer = supabase.table("customers").select("id").eq("email", checkout_data.customer.email).execute()
+            
+            customer_data = {
+                "full_name": checkout_data.customer.full_name,
+                "email": checkout_data.customer.email,
+                "phone": checkout_data.customer.phone,
+                "address_line1": checkout_data.customer.address_line1,
+                "address_line2": checkout_data.customer.address_line2,
+                "city": checkout_data.customer.city,
+                "province": checkout_data.customer.province,
+                "postal_code": checkout_data.customer.postal_code,
+                "country": checkout_data.customer.country
+            }
+            
+            if existing_customer.data:
+                # Update existing customer
+                customer_id = existing_customer.data[0]["id"]
+                supabase.table("customers").update(customer_data).eq("id", customer_id).execute()
+                logger.info(f"Customer updated: {checkout_data.customer.email}")
+            else:
+                # Create new customer
+                customer_result = supabase.table("customers").insert(customer_data).execute()
+                customer_id = customer_result.data[0]["id"] if customer_result.data else None
+                logger.info(f"Customer created: {checkout_data.customer.email}")
+                
         except Exception as e:
             logger.warning(f"Could not save customer to Supabase: {e}")
             customer_id = None
@@ -196,9 +226,10 @@ async def create_checkout(request: Request, checkout_data: CheckoutRequest):
         webhook_url = f"{host_url}/api/webhook/stripe"
         stripe_checkout = StripeCheckout(api_key=api_key, webhook_url=webhook_url)
         
-        # Create checkout session
+        # Create checkout session (Stripe expects amount in dollars)
+        total_dollars = cents_to_dollars(total_cents)
         checkout_request = CheckoutSessionRequest(
-            amount=total_amount,
+            amount=total_dollars,
             currency="cad",
             success_url=success_url,
             cancel_url=cancel_url,
@@ -213,34 +244,72 @@ async def create_checkout(request: Request, checkout_data: CheckoutRequest):
         
         session: CheckoutSessionResponse = await stripe_checkout.create_checkout_session(checkout_request)
         
-        # Save order to Supabase
-        order_data = {
-            "id": order_id,
-            "customer_email": checkout_data.customer.email,
-            "customer_name": checkout_data.customer.full_name,
-            "customer_phone": checkout_data.customer.phone,
-            "shipping_address": f"{checkout_data.customer.address}, {checkout_data.customer.city}, {checkout_data.customer.province} {checkout_data.customer.postal_code}, {checkout_data.customer.country}",
-            "items": order_items,
-            "total_amount": total_amount,
-            "currency": "CAD",
-            "stripe_session_id": session.session_id,
-            "status": "pending",
-            "payment_status": "pending",
-            "created_at": datetime.now(timezone.utc).isoformat()
-        }
-        
+        # Step 2: Create order in Supabase
         try:
+            order_data = {
+                "id": order_id,
+                "customer_id": customer_id,
+                "customer_email": checkout_data.customer.email,
+                "customer_phone": checkout_data.customer.phone,
+                "status": "pending",
+                "delivery_method": checkout_data.delivery_method,
+                # Shipping address
+                "ship_full_name": checkout_data.customer.full_name,
+                "ship_phone": checkout_data.customer.phone,
+                "ship_address_line1": checkout_data.customer.address_line1,
+                "ship_address_line2": checkout_data.customer.address_line2,
+                "ship_city": checkout_data.customer.city,
+                "ship_province": checkout_data.customer.province,
+                "ship_postal_code": checkout_data.customer.postal_code,
+                "ship_country": checkout_data.customer.country,
+                # Amounts in cents
+                "currency": "CAD",
+                "subtotal_cents": subtotal_cents,
+                "shipping_cents": shipping_cents,
+                "tax_cents": tax_cents,
+                "discount_cents": discount_cents,
+                "total_cents": total_cents,
+                # Stripe
+                "stripe_checkout_session_id": session.session_id,
+                # JSON snapshot of items
+                "items_json": order_items
+            }
+            
             supabase.table("orders").insert(order_data).execute()
             logger.info(f"Order created in Supabase: {order_id}")
+            
+            # Step 3: Create order items in Supabase
+            for item in order_items:
+                item_data = {
+                    "order_id": order_id,
+                    "product_id": item["product_id"],
+                    "product_name": item["product_name"],
+                    "sku": item["sku"],
+                    "quantity": item["quantity"],
+                    "unit_price_cents": item["unit_price_cents"],
+                    "line_total_cents": item["line_total_cents"]
+                }
+                supabase.table("order_items").insert(item_data).execute()
+            
+            logger.info(f"Order items created for order: {order_id}")
+            
         except Exception as e:
-            logger.warning(f"Could not save order to Supabase: {e}")
+            logger.error(f"Could not save order to Supabase: {e}")
             # Fallback to MongoDB
-            await db.orders.insert_one(order_data)
+            await db.orders.insert_one({
+                "id": order_id,
+                "customer_email": checkout_data.customer.email,
+                "total_cents": total_cents,
+                "items": order_items,
+                "stripe_session_id": session.session_id,
+                "status": "pending",
+                "created_at": datetime.now(timezone.utc).isoformat()
+            })
         
         # Also save to MongoDB for backup
         transaction = PaymentTransaction(
             session_id=session.session_id,
-            amount=total_amount,
+            amount=total_dollars,
             currency="cad",
             status="initiated",
             payment_status="pending",
@@ -284,10 +353,8 @@ async def get_checkout_status(request: Request, session_id: str):
         if status.payment_status == "paid":
             try:
                 supabase.table("orders").update({
-                    "status": "completed",
-                    "payment_status": "paid",
-                    "updated_at": datetime.now(timezone.utc).isoformat()
-                }).eq("stripe_session_id", session_id).execute()
+                    "status": "paid"
+                }).eq("stripe_checkout_session_id", session_id).execute()
                 logger.info(f"Order updated to paid: {session_id}")
             except Exception as e:
                 logger.warning(f"Could not update order in Supabase: {e}")
@@ -339,10 +406,8 @@ async def stripe_webhook(request: Request):
             if webhook_response.payment_status == "paid":
                 try:
                     supabase.table("orders").update({
-                        "status": "completed",
-                        "payment_status": "paid",
-                        "updated_at": datetime.now(timezone.utc).isoformat()
-                    }).eq("stripe_session_id", webhook_response.session_id).execute()
+                        "status": "paid"
+                    }).eq("stripe_checkout_session_id", webhook_response.session_id).execute()
                 except Exception as e:
                     logger.warning(f"Could not update order in Supabase: {e}")
             
@@ -370,8 +435,16 @@ async def stripe_webhook(request: Request):
 async def get_orders():
     """Get all orders from Supabase"""
     try:
-        result = supabase.table("orders").select("*").order("created_at", desc=True).execute()
-        return result.data
+        result = supabase.table("orders").select("*, order_items(*)").order("created_at", desc=True).execute()
+        # Convert cents to dollars for display
+        orders = result.data
+        for order in orders:
+            order["subtotal"] = cents_to_dollars(order.get("subtotal_cents", 0))
+            order["shipping"] = cents_to_dollars(order.get("shipping_cents", 0))
+            order["tax"] = cents_to_dollars(order.get("tax_cents", 0))
+            order["discount"] = cents_to_dollars(order.get("discount_cents", 0))
+            order["total"] = cents_to_dollars(order.get("total_cents", 0))
+        return orders
     except Exception as e:
         logger.error(f"Error getting orders from Supabase: {str(e)}")
         # Fallback to MongoDB
@@ -383,9 +456,16 @@ async def get_orders():
 async def get_order(order_id: str):
     """Get a specific order by ID"""
     try:
-        result = supabase.table("orders").select("*").eq("id", order_id).execute()
+        result = supabase.table("orders").select("*, order_items(*)").eq("id", order_id).execute()
         if result.data:
-            return result.data[0]
+            order = result.data[0]
+            # Convert cents to dollars for display
+            order["subtotal"] = cents_to_dollars(order.get("subtotal_cents", 0))
+            order["shipping"] = cents_to_dollars(order.get("shipping_cents", 0))
+            order["tax"] = cents_to_dollars(order.get("tax_cents", 0))
+            order["discount"] = cents_to_dollars(order.get("discount_cents", 0))
+            order["total"] = cents_to_dollars(order.get("total_cents", 0))
+            return order
         raise HTTPException(status_code=404, detail="Order not found")
     except HTTPException:
         raise

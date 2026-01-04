@@ -41,6 +41,18 @@ const CricketBatsPage = () => {
   );
 };
 
+const KitBagsPage = () => {
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+      <main>
+        <KitBagsCollection />
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
 const CollectionPage = () => {
   return (
     <div className="min-h-screen bg-white">

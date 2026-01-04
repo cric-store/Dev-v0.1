@@ -60,11 +60,13 @@ const Header = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2">
-              <img 
-                src="https://static.prod-images.emergentagent.com/jobs/ad12457d-7953-4d9a-aba5-d8b3d9f2110b/images/d394573197f4c4d7c5a40998324987ad95ab5def6112c47295f52785ed706a91.png" 
-                alt="CricStore Logo" 
-                className="h-14 w-auto object-contain"
-              />
+              <div className="bg-black rounded-lg p-1">
+                <img 
+                  src="https://customer-assets.emergentagent.com/job_ad12457d-7953-4d9a-aba5-d8b3d9f2110b/artifacts/gwyix5np_43810314-7AC9-492A-A3E1-F1B8A43C7E71.png" 
+                  alt="CricStore Logo" 
+                  className="h-12 w-auto object-contain"
+                />
+              </div>
             </Link>
 
             {/* Desktop Navigation */}

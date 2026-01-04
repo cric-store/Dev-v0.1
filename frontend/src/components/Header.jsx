@@ -55,7 +55,7 @@ const Header = () => {
       </div>
 
       {/* Main Header */}
-      <div className="bg-black">
+      <div style={{ backgroundColor: '#000000' }}>
         <div className="max-w-7xl mx-auto px-4 py-2">
           <div className="flex items-center justify-between">
             {/* Logo */}

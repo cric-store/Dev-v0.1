@@ -28,6 +28,18 @@ const HomePage = () => {
   );
 };
 
+const CricketBatsPage = () => {
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+      <main>
+        <CricketBatsCollection />
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
 const CollectionPage = () => {
   return (
     <div className="min-h-screen bg-white">

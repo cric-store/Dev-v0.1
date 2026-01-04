@@ -29,16 +29,21 @@ export function AuthProvider({ children }) {
   }, []);
 
   const signUp = async (email, password, fullName) => {
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName,
+    try {
+      const { data, error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          data: {
+            full_name: fullName,
+          }
         }
-      }
-    });
-    return { data, error };
+      });
+      return { data, error };
+    } catch (err) {
+      console.error('SignUp catch error:', err);
+      return { data: null, error: { message: 'Connection error. Please try again.' } };
+    }
   };
 
   const signIn = async (email, password) => {

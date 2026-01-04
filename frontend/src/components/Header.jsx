@@ -55,18 +55,16 @@ const Header = () => {
       </div>
 
       {/* Main Header */}
-      <div className="bg-white shadow-md">
-        <div className="max-w-7xl mx-auto px-4 py-3">
+      <div className="bg-black shadow-md">
+        <div className="max-w-7xl mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2">
-              <div className="flex items-center gap-2">
-                <img 
-                  src="https://customer-assets.emergentagent.com/job_ad12457d-7953-4d9a-aba5-d8b3d9f2110b/artifacts/gwyix5np_43810314-7AC9-492A-A3E1-F1B8A43C7E71.png" 
-                  alt="CricStore Logo" 
-                  className="h-20 w-auto object-contain rounded-xl"
-                />
-              </div>
+              <img 
+                src="https://customer-assets.emergentagent.com/job_ad12457d-7953-4d9a-aba5-d8b3d9f2110b/artifacts/gwyix5np_43810314-7AC9-492A-A3E1-F1B8A43C7E71.png" 
+                alt="CricStore Logo" 
+                className="h-28 w-auto object-contain"
+              />
             </Link>
 
             {/* Desktop Navigation */}

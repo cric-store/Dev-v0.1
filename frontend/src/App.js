@@ -181,23 +181,27 @@ const ProductPage = () => {
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/collections/cricket-bats" element={<CricketBatsPage />} />
-          <Route path="/collections/kit-bags" element={<KitBagsPage />} />
-          <Route path="/collections/batting-gear" element={<BattingGearPage />} />
-          <Route path="/collections/helmets" element={<CricketHelmetsPage />} />
-          <Route path="/collections/batting-pads" element={<BattingPadsPage />} />
-          <Route path="/collections/protection" element={<ProtectionPage />} />
-          <Route path="/collections/wicket-keeping" element={<WicketKeepingPage />} />
-          <Route path="/collections/balls" element={<BallsPage />} />
-          <Route path="/collections/footwear" element={<FootwearPage />} />
-          <Route path="/collections/*" element={<CollectionPage />} />
-          <Route path="/product/:id" element={<ProductPage />} />
-          <Route path="*" element={<HomePage />} />
-        </Routes>
-      </BrowserRouter>
+      <CartProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/collections/cricket-bats" element={<CricketBatsPage />} />
+            <Route path="/collections/kit-bags" element={<KitBagsPage />} />
+            <Route path="/collections/batting-gear" element={<BattingGearPage />} />
+            <Route path="/collections/helmets" element={<CricketHelmetsPage />} />
+            <Route path="/collections/batting-pads" element={<BattingPadsPage />} />
+            <Route path="/collections/protection" element={<ProtectionPage />} />
+            <Route path="/collections/wicket-keeping" element={<WicketKeepingPage />} />
+            <Route path="/collections/balls" element={<BallsPage />} />
+            <Route path="/collections/footwear" element={<FootwearPage />} />
+            <Route path="/collections/*" element={<CollectionPage />} />
+            <Route path="/cart" element={<CartPage />} />
+            <Route path="/checkout/success" element={<CheckoutSuccessPage />} />
+            <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="*" element={<HomePage />} />
+          </Routes>
+        </BrowserRouter>
+      </CartProvider>
     </div>
   );
 }

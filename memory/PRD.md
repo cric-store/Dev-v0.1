@@ -29,6 +29,7 @@ Frontend-only React application (no backend/database implemented yet)
 | Protection Collection | ✅ Done | Jan 4, 2026 | `ProtectionCollection.jsx`, `protectionData.js` |
 | Wicket Keeping Collection | ✅ Done | Jan 4, 2026 | `WicketKeepingCollection.jsx`, `wicketKeepingData.js` |
 | Balls Collection | ✅ Done | Jan 4, 2026 | `BallsCollection.jsx`, `ballsData.js` |
+| Footwear Collection | ✅ Done | Jan 4, 2026 | `FootwearCollection.jsx`, `footwearData.js` |
 
 ### Navigation
 | Feature | Status | Date | Files |
@@ -67,6 +68,7 @@ All product data is stored in `/app/frontend/src/data/`:
 - `protectionData.js` - 4 protection items (abdominal, thigh, arm, chest guards)
 - `wicketKeepingData.js` - 5 wicket keeping gloves
 - `ballsData.js` - 5 cricket balls (red and white)
+- `footwearData.js` - 6 cricket shoes (rubber studs and spikes)
 
 ---
 
@@ -82,6 +84,7 @@ All product data is stored in `/app/frontend/src/data/`:
 /collections/protection     → ProtectionPage
 /collections/wicket-keeping → WicketKeepingPage
 /collections/balls           → BallsPage
+/collections/footwear        → FootwearPage
 /collections/*              → CollectionPage (fallback)
 /product/:id                → ProductPage (placeholder)
 ```

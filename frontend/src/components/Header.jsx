@@ -160,7 +160,7 @@ const Header = () => {
                           <Link
                             key={item.name}
                             to={item.href}
-                            className="block px-10 py-2.5 text-gray-600 hover:text-emerald-500 transition-colors text-sm font-medium"
+                            className="block px-10 py-2.5 text-gray-300 hover:text-emerald-400 transition-colors text-sm font-medium"
                             onClick={() => setMobileMenuOpen(false)}
                           >
                             {item.name}
@@ -173,7 +173,7 @@ const Header = () => {
                   <Link
                     key={link.name}
                     to={link.href}
-                    className="px-6 py-3 text-gray-700 hover:bg-emerald-50 hover:text-emerald-500 transition-colors font-medium"
+                    className="px-6 py-3 text-white hover:bg-gray-800 hover:text-emerald-400 transition-colors font-medium"
                     onClick={() => setMobileMenuOpen(false)}
                   >
                     {link.name}

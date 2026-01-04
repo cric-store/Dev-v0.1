@@ -161,7 +161,7 @@ const CartPage = () => {
       <div className="min-h-[60vh] flex flex-col items-center justify-center px-4">
         <ShoppingBag size={80} className="text-gray-300 mb-6" />
         <h2 className="text-2xl font-bold text-gray-900 mb-2">Your cart is empty</h2>
-        <p className="text-gray-500 mb-8">Looks like you haven't added any items yet.</p>
+        <p className="text-gray-500 mb-8">Looks like you have not added any items yet.</p>
         <Link 
           to="/collections/cricket-bats"
           className="px-8 py-3 bg-gradient-to-r from-emerald-400 to-green-500 text-white font-semibold rounded-xl hover:shadow-lg transition-all"

@@ -78,7 +78,7 @@ const Header = () => {
                     onMouseLeave={() => setBattingGearOpen(false)}
                   >
                     <button
-                      className="flex items-center gap-1 text-gray-700 hover:text-emerald-500 font-medium transition-colors relative group"
+                      className="flex items-center gap-1 text-white hover:text-emerald-400 font-medium transition-colors relative group"
                     >
                       {link.name}
                       <ChevronDown size={16} className={`transition-transform duration-200 ${battingGearOpen ? 'rotate-180' : ''}`} />
@@ -105,7 +105,7 @@ const Header = () => {
                   <Link
                     key={link.name}
                     to={link.href}
-                    className="text-gray-700 hover:text-emerald-500 font-medium transition-colors relative group"
+                    className="text-white hover:text-emerald-400 font-medium transition-colors relative group"
                   >
                     {link.name}
                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-400 to-green-400 transition-all duration-300 group-hover:w-full" />
@@ -116,14 +116,14 @@ const Header = () => {
 
             {/* Actions */}
             <div className="flex items-center gap-3">
-              <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-                <Search size={20} className="text-gray-600" />
+              <button className="p-2 hover:bg-gray-800 rounded-full transition-colors">
+                <Search size={20} className="text-white" />
               </button>
-              <button className="p-2 hover:bg-gray-100 rounded-full transition-colors hidden sm:block">
-                <User size={20} className="text-gray-600" />
+              <button className="p-2 hover:bg-gray-800 rounded-full transition-colors hidden sm:block">
+                <User size={20} className="text-white" />
               </button>
-              <Link to="/cart" className="p-2 hover:bg-gray-100 rounded-full transition-colors relative">
-                <ShoppingCart size={20} className="text-gray-600" />
+              <Link to="/cart" className="p-2 hover:bg-gray-800 rounded-full transition-colors relative">
+                <ShoppingCart size={20} className="text-white" />
                 {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-emerald-400 to-green-400 text-white text-xs rounded-full flex items-center justify-center font-bold">
                     {cartCount}

@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { CartProvider } from "./context/CartContext";
 import Header from "./components/Header";
 import HeroCarousel from "./components/HeroCarousel";
 import CategorySection from "./components/CategorySection";
@@ -19,6 +20,8 @@ import ProtectionCollection from "./components/ProtectionCollection";
 import WicketKeepingCollection from "./components/WicketKeepingCollection";
 import BallsCollection from "./components/BallsCollection";
 import FootwearCollection from "./components/FootwearCollection";
+import CartPage from "./pages/CartPage";
+import CheckoutSuccessPage from "./pages/CheckoutSuccessPage";
 
 const HomePage = () => {
   return (

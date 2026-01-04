@@ -7,7 +7,7 @@ import { useCart } from '../context/CartContext';
 const formatPrice = (price) => {
   return new Intl.NumberFormat('en-IN', {
     style: 'currency',
-    currency: 'INR',
+    currency: 'CAD',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
   }).format(price);

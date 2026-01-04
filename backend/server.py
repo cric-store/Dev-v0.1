@@ -109,6 +109,23 @@ def cents_to_dollars(cents: int) -> float:
     return cents / 100
 
 
+# Auth Models
+class SignUpRequest(BaseModel):
+    email: str
+    password: str
+    full_name: str
+
+class SignInRequest(BaseModel):
+    email: str
+    password: str
+
+class AuthResponse(BaseModel):
+    success: bool
+    message: str
+    user: Optional[Dict] = None
+    session: Optional[Dict] = None
+
+
 # Add your routes to the router instead of directly to app
 @api_router.get("/")
 async def root():

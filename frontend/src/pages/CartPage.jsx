@@ -52,6 +52,19 @@ const CartPage = () => {
     return Object.keys(errors).length === 0;
   };
 
+  // Pre-fill form when user is authenticated
+  useEffect(() => {
+    if (isAuthenticated && user) {
+      setCustomerInfo(prev => ({
+        ...prev,
+        full_name: user.user_metadata?.full_name || prev.full_name,
+        email: user.email || prev.email,
+        phone: user.user_metadata?.phone || prev.phone,
+        ...(user.user_metadata?.address || {})
+      }));
+    }
+  }, [isAuthenticated, user]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setCustomerInfo(prev => ({ ...prev, [name]: value }));
@@ -64,8 +77,14 @@ const CartPage = () => {
   const handleCheckout = async () => {
     if (cartItems.length === 0) return;
     
+    // If not authenticated and not checking out as guest, show options
     if (!showCheckoutForm) {
-      setShowCheckoutForm(true);
+      if (isAuthenticated) {
+        setShowCheckoutForm(true);
+        setCheckoutAsGuest(false);
+      } else {
+        setShowCheckoutForm(true);
+      }
       return;
     }
     

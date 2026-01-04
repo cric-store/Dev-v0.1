@@ -19,7 +19,8 @@ const Header = () => {
         { name: "Batting Gloves", href: "/collections/batting-gear" },
         { name: "Batting Pads", href: "/collections/batting-pads" },
         { name: "Helmets", href: "/collections/helmets" },
-        { name: "Protection", href: "/collections/protection" }
+        { name: "Protection", href: "/collections/protection" },
+        { name: "Wicket Keeping", href: "/collections/wicket-keeping" }
       ]
     },
     { name: "Kit Bags", href: "/collections/kit-bags" },

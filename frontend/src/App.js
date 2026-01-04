@@ -178,6 +178,54 @@ const AccessoriesPage = () => {
   );
 };
 
+const CartPageWrapper = () => {
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+      <main>
+        <CartPage />
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+const AuthPageWrapper = () => {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <main>
+        <AuthPage />
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+const ProfilePageWrapper = () => {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <main>
+        <ProfilePage />
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
+const SettingsPageWrapper = () => {
+  return (
+    <div className="min-h-screen bg-gray-50">
+      <Header />
+      <main>
+        <SettingsPage />
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
 const CollectionPage = () => {
   return (
     <div className="min-h-screen bg-white">

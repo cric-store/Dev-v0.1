@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Menu, X, Search, ShoppingCart, User, Phone, Mail, ChevronDown } from 'lucide-react';
+import { useCart } from '../context/CartContext';
 
 const Header = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [cartCount] = useState(0);
+  const { getCartCount } = useCart();
+  const cartCount = getCartCount();
   const [battingGearOpen, setBattingGearOpen] = useState(false);
   const [mobileBattingGearOpen, setMobileBattingGearOpen] = useState(false);
 

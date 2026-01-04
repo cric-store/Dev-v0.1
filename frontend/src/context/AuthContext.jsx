@@ -53,29 +53,33 @@ export function AuthProvider({ children }) {
 
   const signIn = async (email, password) => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password
+      // Use backend API to sign in
+      const backendUrl = process.env.REACT_APP_BACKEND_URL;
+      const response = await fetch(`${backendUrl}/api/auth/signin`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password })
       });
       
-      if (error) {
-        // Handle specific Supabase error codes
-        let message = error.message;
-        if (error.message?.includes('Invalid login credentials')) {
-          message = 'Invalid email or password. Please try again.';
-        } else if (error.message?.includes('Email not confirmed')) {
-          message = 'Please verify your email before signing in. Check your inbox.';
-        }
-        return { data: null, error: { message } };
-      }
+      const data = await response.json();
       
-      return { data, error: null };
+      if (data.success && data.session) {
+        // Set session in Supabase client
+        await supabase.auth.setSession({
+          access_token: data.session.access_token,
+          refresh_token: data.session.refresh_token
+        });
+        
+        // Update user state
+        const { data: { user } } = await supabase.auth.getUser();
+        setUser(user);
+        
+        return { data: data.user, error: null };
+      } else {
+        return { data: null, error: { message: data.message } };
+      }
     } catch (err) {
       console.error('SignIn catch error:', err);
-      // Handle the "body stream already read" error
-      if (err.message?.includes('body stream') || err.message?.includes('Body')) {
-        return { data: null, error: { message: 'Invalid email or password. Please try again.' } };
-      }
       return { data: null, error: { message: 'Connection error. Please try again.' } };
     }
   };

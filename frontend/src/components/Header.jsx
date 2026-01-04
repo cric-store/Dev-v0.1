@@ -129,14 +129,14 @@ const Header = () => {
               <button className="p-2 hover:bg-gray-100 rounded-full transition-colors hidden sm:block">
                 <User size={20} className="text-gray-600" />
               </button>
-              <button className="p-2 hover:bg-gray-100 rounded-full transition-colors relative">
+              <Link to="/cart" className="p-2 hover:bg-gray-100 rounded-full transition-colors relative">
                 <ShoppingCart size={20} className="text-gray-600" />
                 {cartCount > 0 && (
                   <span className="absolute -top-1 -right-1 w-5 h-5 bg-gradient-to-r from-emerald-400 to-green-400 text-white text-xs rounded-full flex items-center justify-center font-bold">
                     {cartCount}
                   </span>
                 )}
-              </button>
+              </Link>
               <button
                 className="lg:hidden p-2 hover:bg-gray-100 rounded-full transition-colors"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}

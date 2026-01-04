@@ -131,10 +131,10 @@ const Header = () => {
                 )}
               </Link>
               <button
-                className="lg:hidden p-2 hover:bg-gray-100 rounded-full transition-colors"
+                className="lg:hidden p-2 hover:bg-gray-800 rounded-full transition-colors"
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
               >
-                {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
+                {mobileMenuOpen ? <X size={24} className="text-white" /> : <Menu size={24} className="text-white" />}
               </button>
             </div>
           </div>
@@ -142,20 +142,20 @@ const Header = () => {
 
         {/* Mobile Menu */}
         {mobileMenuOpen && (
-          <div className="lg:hidden bg-white border-t border-gray-100 shadow-lg">
+          <div className="lg:hidden bg-gray-900 border-t border-gray-800 shadow-lg">
             <nav className="flex flex-col py-4">
               {navLinks.map((link) => (
                 link.hasDropdown ? (
                   <div key={link.name}>
                     <button
                       onClick={() => setMobileBattingGearOpen(!mobileBattingGearOpen)}
-                      className="w-full px-6 py-3 text-gray-700 hover:bg-emerald-50 hover:text-emerald-500 transition-colors font-medium flex items-center justify-between"
+                      className="w-full px-6 py-3 text-white hover:bg-gray-800 hover:text-emerald-400 transition-colors font-medium flex items-center justify-between"
                     >
                       {link.name}
                       <ChevronDown size={16} className={`transition-transform duration-200 ${mobileBattingGearOpen ? 'rotate-180' : ''}`} />
                     </button>
                     {mobileBattingGearOpen && (
-                      <div className="bg-gray-50 py-2">
+                      <div className="bg-gray-800 py-2">
                         {link.dropdown.map((item) => (
                           <Link
                             key={item.name}

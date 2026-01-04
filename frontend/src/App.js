@@ -18,6 +18,7 @@ import BattingPadsCollection from "./components/BattingPadsCollection";
 import ProtectionCollection from "./components/ProtectionCollection";
 import WicketKeepingCollection from "./components/WicketKeepingCollection";
 import BallsCollection from "./components/BallsCollection";
+import FootwearCollection from "./components/FootwearCollection";
 
 const HomePage = () => {
   return (
@@ -132,6 +133,18 @@ const BallsPage = () => {
   );
 };
 
+const FootwearPage = () => {
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+      <main>
+        <FootwearCollection />
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
 const CollectionPage = () => {
   return (
     <div className="min-h-screen bg-white">
@@ -176,6 +189,7 @@ function App() {
           <Route path="/collections/protection" element={<ProtectionPage />} />
           <Route path="/collections/wicket-keeping" element={<WicketKeepingPage />} />
           <Route path="/collections/balls" element={<BallsPage />} />
+          <Route path="/collections/footwear" element={<FootwearPage />} />
           <Route path="/collections/*" element={<CollectionPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="*" element={<HomePage />} />

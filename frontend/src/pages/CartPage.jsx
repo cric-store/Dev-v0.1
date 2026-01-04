@@ -24,11 +24,12 @@ const CartPage = () => {
     full_name: '',
     email: '',
     phone: '',
-    address: '',
+    address_line1: '',
+    address_line2: '',
     city: '',
     province: '',
     postal_code: '',
-    country: 'Canada'
+    country: 'CA'
   });
   const [formErrors, setFormErrors] = useState({});
 
@@ -39,7 +40,7 @@ const CartPage = () => {
     if (!customerInfo.email.trim()) errors.email = 'Email is required';
     else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(customerInfo.email)) errors.email = 'Invalid email format';
     if (!customerInfo.phone.trim()) errors.phone = 'Phone number is required';
-    if (!customerInfo.address.trim()) errors.address = 'Address is required';
+    if (!customerInfo.address_line1.trim()) errors.address_line1 = 'Address is required';
     if (!customerInfo.city.trim()) errors.city = 'City is required';
     if (!customerInfo.province.trim()) errors.province = 'Province is required';
     if (!customerInfo.postal_code.trim()) errors.postal_code = 'Postal code is required';
@@ -306,14 +307,27 @@ const CartPage = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-1">Street Address *</label>
                   <input
                     type="text"
-                    name="address"
-                    value={customerInfo.address}
+                    name="address_line1"
+                    value={customerInfo.address_line1}
                     onChange={handleInputChange}
                     placeholder="123 Cricket Lane"
-                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 ${formErrors.address ? 'border-red-500' : 'border-gray-300'}`}
+                    className={`w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500 ${formErrors.address_line1 ? 'border-red-500' : 'border-gray-300'}`}
                     data-testid="customer-address"
                   />
-                  {formErrors.address && <p className="text-red-500 text-xs mt-1">{formErrors.address}</p>}
+                  {formErrors.address_line1 && <p className="text-red-500 text-xs mt-1">{formErrors.address_line1}</p>}
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Apt/Suite (Optional)</label>
+                  <input
+                    type="text"
+                    name="address_line2"
+                    value={customerInfo.address_line2}
+                    onChange={handleInputChange}
+                    placeholder="Apt 4B"
+                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    data-testid="customer-address2"
+                  />
                 </div>
 
                 <div className="grid grid-cols-2 gap-3">

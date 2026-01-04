@@ -10,6 +10,9 @@ Frontend-only React application (no backend/database implemented yet)
 
 ## Tech Stack
 - **Frontend:** React, React Router, TailwindCSS
+- **Backend:** FastAPI (Python)
+- **Database:** MongoDB
+- **Payments:** Stripe (via emergentintegrations library)
 - **UI Components:** Custom components + Shadcn UI available
 - **Data:** Mock JavaScript files (scraped from original site)
 
@@ -30,6 +33,7 @@ Frontend-only React application (no backend/database implemented yet)
 | Wicket Keeping Collection | ✅ Done | Jan 4, 2026 | `WicketKeepingCollection.jsx`, `wicketKeepingData.js` |
 | Balls Collection | ✅ Done | Jan 4, 2026 | `BallsCollection.jsx`, `ballsData.js` |
 | Footwear Collection | ✅ Done | Jan 4, 2026 | `FootwearCollection.jsx`, `footwearData.js` |
+| Stripe Payment Integration | ✅ Done | Jan 4, 2026 | `server.py`, `CartContext.jsx`, `CartPage.jsx`, `CheckoutSuccessPage.jsx` |
 
 ### Navigation
 | Feature | Status | Date | Files |
@@ -85,6 +89,8 @@ All product data is stored in `/app/frontend/src/data/`:
 /collections/wicket-keeping → WicketKeepingPage
 /collections/balls           → BallsPage
 /collections/footwear        → FootwearPage
+/cart                        → CartPage
+/checkout/success            → CheckoutSuccessPage
 /collections/*              → CollectionPage (fallback)
 /product/:id                → ProductPage (placeholder)
 ```

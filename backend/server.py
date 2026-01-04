@@ -126,7 +126,7 @@ async def create_checkout(request: Request, checkout_data: CheckoutRequest):
         # Create checkout session
         checkout_request = CheckoutSessionRequest(
             amount=total_amount,
-            currency="inr",
+            currency="cad",
             success_url=success_url,
             cancel_url=cancel_url,
             metadata={
@@ -142,7 +142,7 @@ async def create_checkout(request: Request, checkout_data: CheckoutRequest):
         transaction = PaymentTransaction(
             session_id=session.session_id,
             amount=total_amount,
-            currency="inr",
+            currency="cad",
             status="initiated",
             payment_status="pending",
             metadata=checkout_request.metadata

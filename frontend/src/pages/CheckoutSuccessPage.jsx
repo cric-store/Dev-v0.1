@@ -63,8 +63,8 @@ const CheckoutSuccessPage = () => {
     pollPaymentStatus();
   }, [sessionId, clearCart]);
 
-  const formatPrice = (amount, currency = 'INR') => {
-    return new Intl.NumberFormat('en-IN', {
+  const formatPrice = (amount, currency = 'CAD') => {
+    return new Intl.NumberFormat('en-CA', {
       style: 'currency',
       currency: currency.toUpperCase(),
       minimumFractionDigits: 0,

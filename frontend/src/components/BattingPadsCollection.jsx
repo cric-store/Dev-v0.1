@@ -493,7 +493,8 @@ const BattingPadsCollection = () => {
       <ProductModal 
         product={selectedProduct} 
         isOpen={isModalOpen} 
-        onClose={closeModal} 
+        onClose={closeModal}
+        onAddToCart={addToCart}
       />
     </div>
   );

@@ -105,6 +105,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/collections/cricket-bats" element={<CricketBatsPage />} />
           <Route path="/collections/kit-bags" element={<KitBagsPage />} />
+          <Route path="/collections/batting-gear" element={<BattingGearPage />} />
           <Route path="/collections/*" element={<CollectionPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="*" element={<HomePage />} />

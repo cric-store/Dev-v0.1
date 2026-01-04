@@ -9,6 +9,7 @@ import BatBrandsSection from "./components/BatBrandsSection";
 import PopularBrands from "./components/PopularBrands";
 import PromoBanners from "./components/PromoBanners";
 import Footer from "./components/Footer";
+import CricketBatsCollection from "./components/CricketBatsCollection";
 
 const HomePage = () => {
   return (

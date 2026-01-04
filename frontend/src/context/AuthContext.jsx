@@ -42,11 +42,16 @@ export function AuthProvider({ children }) {
   };
 
   const signIn = async (email, password) => {
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    });
-    return { data, error };
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+      return { data, error };
+    } catch (err) {
+      console.error('SignIn catch error:', err);
+      return { data: null, error: { message: 'Connection error. Please try again.' } };
+    }
   };
 
   const signOut = async () => {

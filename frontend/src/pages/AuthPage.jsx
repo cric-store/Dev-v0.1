@@ -58,7 +58,17 @@ const AuthPage = () => {
         navigate(redirectTo);
       }
     } catch (err) {
-      setError(err.message);
+      console.error('Auth error:', err);
+      // Handle specific error messages
+      let errorMessage = err.message || 'An error occurred';
+      if (errorMessage.includes('Body') || errorMessage.includes('body')) {
+        errorMessage = 'Connection error. Please check your internet and try again.';
+      } else if (errorMessage.includes('Invalid login')) {
+        errorMessage = 'Invalid email or password. Please try again.';
+      } else if (errorMessage.includes('Email not confirmed')) {
+        errorMessage = 'Please verify your email before signing in.';
+      }
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }

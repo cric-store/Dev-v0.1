@@ -60,18 +60,11 @@ const Header = () => {
           <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="flex items-center gap-2">
-              <div className="relative">
-                <div className="w-12 h-12 bg-gradient-to-br from-emerald-400 to-green-500 rounded-full flex items-center justify-center shadow-lg">
-                  <span className="text-white font-black text-lg">CS</span>
-                </div>
-                <div className="absolute -bottom-1 -right-1 w-4 h-4 bg-green-400 rounded-full animate-pulse" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-2xl font-black bg-gradient-to-r from-emerald-500 to-green-400 bg-clip-text text-transparent tracking-tight">
-                  CRIC STORE
-                </span>
-                <span className="text-[10px] text-gray-500 -mt-1 tracking-widest">EVERYTHING CRICKET</span>
-              </div>
+              <img 
+                src="https://static.prod-images.emergentagent.com/jobs/ad12457d-7953-4d9a-aba5-d8b3d9f2110b/images/d394573197f4c4d7c5a40998324987ad95ab5def6112c47295f52785ed706a91.png" 
+                alt="CricStore Logo" 
+                className="h-14 w-auto object-contain"
+              />
             </Link>
 
             {/* Desktop Navigation */}

@@ -18,7 +18,7 @@ const Header = () => {
       href: "/collections/batting-gear",
       hasDropdown: true,
       dropdown: [
-        { name: "Batting Gloves", href: "/collections/batting-gear" },
+        { name: "Batting Gloves", href: "/collections/batting-gloves" },
         { name: "Batting Pads", href: "/collections/batting-pads" },
         { name: "Helmets", href: "/collections/helmets" },
         { name: "Protection", href: "/collections/protection" }

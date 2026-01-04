@@ -25,8 +25,17 @@ const CartPage = () => {
     setIsLoading(true);
     setError('');
     
+    const backendUrl = process.env.REACT_APP_BACKEND_URL;
+    
+    // Check if backend URL is configured
+    if (!backendUrl) {
+      setError('Checkout service not configured. Please contact support.');
+      setIsLoading(false);
+      return;
+    }
+    
     try {
-      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/api/checkout`, {
+      const response = await fetch(`${backendUrl}/api/checkout`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -43,8 +52,15 @@ const CartPage = () => {
       });
 
       if (!response.ok) {
-        const errData = await response.json();
-        throw new Error(errData.detail || 'Failed to create checkout');
+        let errorMessage = 'Failed to create checkout';
+        try {
+          const errData = await response.json();
+          errorMessage = errData.detail || errorMessage;
+        } catch {
+          // Response might not be JSON
+          errorMessage = `Server error (${response.status})`;
+        }
+        throw new Error(errorMessage);
       }
 
       const data = await response.json();
@@ -52,10 +68,19 @@ const CartPage = () => {
       // Redirect to Stripe checkout
       if (data.checkout_url) {
         window.location.href = data.checkout_url;
+      } else {
+        throw new Error('Invalid checkout response');
       }
     } catch (err) {
       console.error('Checkout error:', err);
-      setError(err.message || 'Failed to initiate checkout');
+      // Provide user-friendly error messages
+      let userMessage = err.message || 'Failed to initiate checkout';
+      if (err.name === 'TypeError' && err.message.includes('fetch')) {
+        userMessage = 'Unable to connect to checkout service. Please check your internet connection.';
+      } else if (userMessage.includes('Body') || userMessage.includes('body')) {
+        userMessage = 'Connection error. Please try again.';
+      }
+      setError(userMessage);
     } finally {
       setIsLoading(false);
     }

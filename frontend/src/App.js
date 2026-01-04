@@ -12,6 +12,7 @@ import Footer from "./components/Footer";
 import CricketBatsCollection from "./components/CricketBatsCollection";
 import CricketBatsCollectionNew from "./components/CricketBatsCollectionNew";
 import KitBagsCollection from "./components/KitBagsCollection";
+import BattingGearCollection from "./components/BattingGearCollection";
 
 const HomePage = () => {
   return (

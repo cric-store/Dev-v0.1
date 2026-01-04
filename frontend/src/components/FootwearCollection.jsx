@@ -1,6 +1,7 @@
 import React, { useState, useMemo } from 'react';
 import { ChevronLeft, ChevronRight, X, ZoomIn, Heart, ShoppingCart, Check, Package, Truck, Shield, Filter, ChevronDown } from 'lucide-react';
 import { footwearBrands, footwearProducts, getFootwearByBrand } from '../data/footwearData';
+import { useCart } from '../context/CartContext';
 
 // Format price in INR
 const formatPrice = (price) => {
@@ -13,11 +14,18 @@ const formatPrice = (price) => {
 };
 
 // Product Quick View Modal
-const ProductModal = ({ product, isOpen, onClose }) => {
+const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
+  const [added, setAdded] = useState(false);
 
   if (!isOpen || !product) return null;
+
+  const handleAddToCart = () => {
+    onAddToCart(product);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 2000);
+  };
 
   const nextImage = () => {
     setCurrentImageIndex((prev) => (prev + 1) % product.images.length);

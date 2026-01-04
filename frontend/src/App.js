@@ -133,6 +133,7 @@ function App() {
           <Route path="/collections/kit-bags" element={<KitBagsPage />} />
           <Route path="/collections/batting-gear" element={<BattingGearPage />} />
           <Route path="/collections/helmets" element={<CricketHelmetsPage />} />
+          <Route path="/collections/batting-pads" element={<BattingPadsPage />} />
           <Route path="/collections/*" element={<CollectionPage />} />
           <Route path="/product/:id" element={<ProductPage />} />
           <Route path="*" element={<HomePage />} />

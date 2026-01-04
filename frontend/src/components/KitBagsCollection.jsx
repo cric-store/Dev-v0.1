@@ -169,17 +169,26 @@ const ProductModal = ({ product, isOpen, onClose, onAddToCart }) => {
               </button>
               <button
                 disabled={!product.inStock}
+                onClick={handleAddToCart}
                 className={`flex-1 py-3 rounded-xl font-bold flex items-center justify-center gap-2 transition-all ${
                   added
                     ? 'bg-emerald-600 text-white'
-                    :
-                  product.inStock
+                    : product.inStock
                     ? 'bg-gradient-to-r from-emerald-400 to-green-500 text-white hover:shadow-lg hover:shadow-emerald-500/30'
                     : 'bg-gray-100 text-gray-400 cursor-not-allowed'
                 }`}
               >
-                <ShoppingCart size={20} />
-                {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                {added ? (
+                  <>
+                    <Check size={20} />
+                    Added!
+                  </>
+                ) : (
+                  <>
+                    <ShoppingCart size={20} />
+                    {product.inStock ? 'Add to Cart' : 'Out of Stock'}
+                  </>
+                )}
               </button>
             </div>
 

@@ -68,6 +68,18 @@ const BattingGearPage = () => {
   );
 };
 
+const CricketHelmetsPage = () => {
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+      <main>
+        <CricketHelmetsCollection />
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
 const CollectionPage = () => {
   return (
     <div className="min-h-screen bg-white">

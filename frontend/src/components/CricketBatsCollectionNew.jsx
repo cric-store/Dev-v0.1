@@ -303,6 +303,7 @@ const BatCard = ({ bat, onQuickView }) => {
 
 // Main Component
 const CricketBatsCollectionNew = () => {
+  const { addToCart } = useCart();
   const [selectedBrand, setSelectedBrand] = useState('all');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);

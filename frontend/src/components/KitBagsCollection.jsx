@@ -327,6 +327,7 @@ const KitBagCard = ({ bag, onQuickView }) => {
 
 // Main Kit Bags Collection Component
 const KitBagsCollection = () => {
+  const { addToCart } = useCart();
   const [selectedBrand, setSelectedBrand] = useState('all');
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);

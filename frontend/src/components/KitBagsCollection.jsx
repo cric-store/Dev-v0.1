@@ -5,7 +5,7 @@ import { kitBagsBrands, kitBags, getKitBagsByBrand } from '../data/kitBagsData';
 
 // Format price in INR
 const formatPrice = (price) => {
-  return new Intl.NumberFormat('en-IN', {
+  return new Intl.NumberFormat('en-CA', {
     style: 'currency',
     currency: 'CAD',
     minimumFractionDigits: 0,

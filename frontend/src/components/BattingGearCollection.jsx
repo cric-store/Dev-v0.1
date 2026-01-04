@@ -5,7 +5,7 @@ import { battingGearBrands, battingGear, getBattingGearByBrand } from '../data/b
 
 // Format price in INR
 const formatPrice = (price) => {
-  return new Intl.NumberFormat('en-IN', {
+  return new Intl.NumberFormat('en-CA', {
     style: 'currency',
     currency: 'CAD',
     minimumFractionDigits: 0,

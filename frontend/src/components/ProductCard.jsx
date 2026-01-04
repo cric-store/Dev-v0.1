@@ -7,7 +7,7 @@ const ProductCard = ({ product }) => {
   const [isFavorite, setIsFavorite] = useState(false);
 
   const formatPrice = (price) => {
-    return new Intl.NumberFormat('en-IN', {
+    return new Intl.NumberFormat('en-CA', {
       style: 'currency',
       currency: 'CAD',
       minimumFractionDigits: 0,

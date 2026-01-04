@@ -26,6 +26,7 @@ Frontend-only React application (no backend/database implemented yet)
 | Batting Gear Collection | ✅ Done | - | `BattingGearCollection.jsx`, `battingGearData.js` |
 | Cricket Helmets Collection | ✅ Done | - | `CricketHelmetsCollection.jsx`, `cricketHelmetsData.js` |
 | Batting Pads Collection | ✅ Done | Jan 4, 2026 | `BattingPadsCollection.jsx`, `battingPadsData.js` |
+| Protection Collection | ✅ Done | Jan 4, 2026 | `ProtectionCollection.jsx`, `protectionData.js` |
 
 ### Navigation
 | Feature | Status | Date | Files |
@@ -40,7 +41,6 @@ Frontend-only React application (no backend/database implemented yet)
 
 ### P1 - High Priority
 - [ ] **Batting Gloves Collection** - Create page and link from dropdown (currently links to batting-gear)
-- [ ] **Protection Collection** - Create page for protection items and link from dropdown
 
 ### P2 - Medium Priority  
 - [ ] **Backend Development** - MongoDB models, FastAPI CRUD endpoints
@@ -62,6 +62,7 @@ All product data is stored in `/app/frontend/src/data/`:
 - `battingGearData.js` - 4 batting gear items
 - `cricketHelmetsData.js` - 6 helmets (1 per brand)
 - `battingPadsData.js` - 9 batting pads (1 per brand)
+- `protectionData.js` - 4 protection items (abdominal, thigh, arm, chest guards)
 
 ---
 
@@ -74,6 +75,7 @@ All product data is stored in `/app/frontend/src/data/`:
 /collections/batting-gear   → BattingGearPage
 /collections/helmets        → CricketHelmetsPage
 /collections/batting-pads   → BattingPadsPage
+/collections/protection     → ProtectionPage
 /collections/*              → CollectionPage (fallback)
 /product/:id                → ProductPage (placeholder)
 ```

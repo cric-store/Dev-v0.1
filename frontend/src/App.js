@@ -55,6 +55,18 @@ const KitBagsPage = () => {
   );
 };
 
+const BattingGearPage = () => {
+  return (
+    <div className="min-h-screen bg-white">
+      <Header />
+      <main>
+        <BattingGearCollection />
+      </main>
+      <Footer />
+    </div>
+  );
+};
+
 const CollectionPage = () => {
   return (
     <div className="min-h-screen bg-white">

@@ -259,29 +259,35 @@ const ProductPage = () => {
 function App() {
   return (
     <div className="App">
-      <CartProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/collections/cricket-bats" element={<CricketBatsPage />} />
-            <Route path="/collections/kit-bags" element={<KitBagsPage />} />
-            <Route path="/collections/batting-gear" element={<BattingGearPage />} />
-            <Route path="/collections/helmets" element={<CricketHelmetsPage />} />
-            <Route path="/collections/batting-pads" element={<BattingPadsPage />} />
-            <Route path="/collections/protection" element={<ProtectionPage />} />
-            <Route path="/collections/wicket-keeping" element={<WicketKeepingPage />} />
-            <Route path="/collections/balls" element={<BallsPage />} />
-            <Route path="/collections/footwear" element={<FootwearPage />} />
-            <Route path="/collections/batting-gloves" element={<BattingGlovesPage />} />
-            <Route path="/collections/accessories" element={<AccessoriesPage />} />
-            <Route path="/collections/*" element={<CollectionPage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/checkout/success" element={<CheckoutSuccessPage />} />
-            <Route path="/product/:id" element={<ProductPage />} />
-            <Route path="*" element={<HomePage />} />
-          </Routes>
-        </BrowserRouter>
-      </CartProvider>
+      <AuthProvider>
+        <CartProvider>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/collections/cricket-bats" element={<CricketBatsPage />} />
+              <Route path="/collections/kit-bags" element={<KitBagsPage />} />
+              <Route path="/collections/batting-gear" element={<BattingGearPage />} />
+              <Route path="/collections/helmets" element={<CricketHelmetsPage />} />
+              <Route path="/collections/batting-pads" element={<BattingPadsPage />} />
+              <Route path="/collections/protection" element={<ProtectionPage />} />
+              <Route path="/collections/wicket-keeping" element={<WicketKeepingPage />} />
+              <Route path="/collections/balls" element={<BallsPage />} />
+              <Route path="/collections/footwear" element={<FootwearPage />} />
+              <Route path="/collections/batting-gloves" element={<BattingGlovesPage />} />
+              <Route path="/collections/accessories" element={<AccessoriesPage />} />
+              <Route path="/collections/*" element={<CollectionPage />} />
+              <Route path="/cart" element={<CartPageWrapper />} />
+              <Route path="/checkout/success" element={<CheckoutSuccessPage />} />
+              <Route path="/login" element={<AuthPageWrapper />} />
+              <Route path="/signup" element={<AuthPageWrapper />} />
+              <Route path="/profile" element={<ProfilePageWrapper />} />
+              <Route path="/settings" element={<SettingsPageWrapper />} />
+              <Route path="/product/:id" element={<ProductPage />} />
+              <Route path="*" element={<HomePage />} />
+            </Routes>
+          </BrowserRouter>
+        </CartProvider>
+      </AuthProvider>
     </div>
   );
 }

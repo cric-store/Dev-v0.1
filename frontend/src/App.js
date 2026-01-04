@@ -35,7 +35,7 @@ const CricketBatsPage = () => {
     <div className="min-h-screen bg-white">
       <Header />
       <main>
-        <CricketBatsCollection />
+        <CricketBatsCollectionNew />
       </main>
       <Footer />
     </div>
